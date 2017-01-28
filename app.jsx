@@ -1,8 +1,8 @@
-function Application() {
+function Application(props) {
   return (
     <div className="scoreboard">
       <div className="header">
-        <h1>Tabulka výsledků</h1>
+        <h1>{props.title}</h1>
       </div>
       
       <div className="player">
@@ -26,4 +26,4 @@ function Application() {
   );
 }
 
-ReactDOM.render(<Application />, document.getElementById('container'));
+ReactDOM.render(<Application title="Tabulka výsledků" />, document.getElementById('container'));

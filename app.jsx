@@ -26,4 +26,8 @@ function Application(props) {
   );
 }
 
+Application.propTypes = {
+  title: React.PropTypes.string.isRequired
+};
+
 ReactDOM.render(<Application title="Tabulka výsledků" />, document.getElementById('container'));

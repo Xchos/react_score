@@ -22,15 +22,16 @@ Header.propTypes = {
 function Counter(props) {
     return (
       <div className="counter">
-        <button className="counter-action decrement">-</button>
+        <button className="counter-action decrement" onClick={function(){props.onChange(-1);}} >-</button>
         <div className="counter-score">{props.score}</div>
-        <button className="counter-action increment">+</button>
+        <button className="counter-action increment" onClick={function(){props.onChange(1);}} >+</button>
       </div>
     );
 }
 
 Counter.propTypes = {
   score: React.PropTypes.number.isRequired,
+  onChange: React.PropTypes.func.isRequired,
 }
 
 
@@ -38,7 +39,7 @@ function Player(props) {
   return (
     <div className="player">
       <div className="player-name">{props.name}</div>
-      <Counter score={props.score} />
+      <Counter score={props.score} onChange={props.onScoreChange}/>
     </div>
   );
 }
@@ -46,6 +47,7 @@ function Player(props) {
 Player.propTypes = {
   name: React.PropTypes.string.isRequired,
   score: React.PropTypes.number.isRequired,
+  onScoreChange: React.PropTypes.func.isRequired,
 };
 
 var Application = React.createClass({
@@ -69,14 +71,29 @@ var Application = React.createClass({
       players: this.props.initialPlayers,
     };
   },
+  
+  onScoreChange: function(index, delta) {
+    this.state.players[index].score += delta;
+    this.setState(this.state);
+  },
+
   render: function() {
     return (
       <div className="scoreboard">
         <Header title={this.props.title} />
         <div className="players"> 
-          {this.state.players.map(function(player){
-            return <Player name={player.name} key={player.id} score={player.score} />;
-          })}
+          {this.state.players.map(
+            function(player, index){
+              return (
+                <Player 
+                  onScoreChange={function(delta) {this.onScoreChange(index, delta)}.bind(this)}
+                  name={player.name}
+                  key={player.id}
+                  score={player.score}
+                />
+              );
+            }.bind(this)
+          )}
         </div>
       </div>
     );

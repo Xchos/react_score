@@ -3,6 +3,7 @@ var PLAYERS = [
   {id: 2, name: "Jan Novák", score: 35},
   {id: 3, name: "Jana Nováková", score: 32},
 ];
+
 function Header(props) {
   return(
     <div className="header">
@@ -15,19 +16,23 @@ Header.propTypes = {
   title: React.PropTypes.string.isRequired
 };
 
-function Counter(props){
-  return (
-    <div className="counter">
-      <button className="counter-action decrement">-</button>
-      <div className="counter-score">{props.score}</div>
-      <button className="counter-action increment">+</button>
-    </div>
-  );
-}
 
-Counter.propTypes = {
-  score: React.PropTypes.number.isRequired,  
-};
+var Counter = React.createClass({
+  propTypes: {
+    score: React.PropTypes.number.isRequired,  
+  },
+  render: function() {
+    return (
+      <div className="counter">
+        <button className="counter-action decrement">-</button>
+        <div className="counter-score">{this.props.score}</div>
+        <button className="counter-action increment">+</button>
+      </div>
+    );
+  }
+});
+
+
 
 function Player(props) {
   return (

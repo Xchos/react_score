@@ -10,28 +10,31 @@ Header.propTypes = {
   title: React.PropTypes.string.isRequired
 };
 
+function Player(props) {
+  return (
+    <div className="player">
+      <div className="player-name">{props.name}</div>
+      <div className="counter">
+        <button className="counter-action decrement">-</button>
+        <div className="counter-score">{props.score}</div>
+        <button className="counter-action increment">+</button>
+      </div>
+    </div>
+  );
+}
+
+Player.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  score: React.PropTypes.number.isRequired,  
+};
+
 function Application(props) {
   return (
     <div className="scoreboard">
       <Header title={props.title} />
       <div className="players"> 
-        <div className="player">
-          <div className="player-name">Lukáš Zelenka</div>
-          <div className="counter">
-            <button className="counter-action decrement">-</button>
-            <div className="counter-score">30</div>
-            <button className="counter-action increment">+</button>
-          </div>
-        </div>
-
-        <div className="player">
-          <div className="player-name">Jan Novák</div>
-          <div className="counter">
-            <button className="counter-action decrement">-</button>
-            <div className="counter-score">29</div>
-            <button className="counter-action increment">+</button>
-          </div>
-        </div>
+        <Player name="Lukas Zelenka" score={31} />
+        <Player name="Jan Novák" score={30} />
       </div>
     </div>
   );

@@ -4,6 +4,42 @@ var PLAYERS = [
   {id: 3, name: "Jana Nováková", score: 32},
 ];
 
+var nextId = PLAYERS.lenght+1;
+
+var AddPlayerForm = React.createClass({
+  propTypes: {
+    onAdd: React.PropTypes.func.isRequired,  
+  },
+
+  getInitialState: function() {
+    return {
+      name: "",
+    }
+  },
+
+  onNameChange: function(e) {
+    this.setState({name: e.target.value});
+  },
+  
+  onSubmit: function(e) {
+      e.preventDefault();  
+
+      this.props.onAdd(this.state.name);
+      this.setState({name: ""});
+  },
+  
+  render: function() {
+    return (
+      <div className="add-player-form">
+        <form onSubmit={this.onSubmit}>
+          <input type="text" value={this.name} onChange={this.onNameChange} />
+          <input type="submit" value="Přidat" />
+        </form>
+      </div>
+    );
+  }
+});
+
 
 
 function Stats(props) {
@@ -107,6 +143,16 @@ var Application = React.createClass({
     this.setState(this.state);
   },
 
+  onPlayerAdd: function(name) {
+    this.state.players.push({
+      name: name,
+      score: 0,
+      id: nextId,
+    });
+    this.setState(this.state);
+    nextId++;
+  },
+
   render: function() {
     return (
       <div className="scoreboard">
@@ -125,6 +171,7 @@ var Application = React.createClass({
             }.bind(this)
           )}
         </div>
+        <AddPlayerForm onAdd={this.onPlayerAdd} />
       </div>
     );
   }

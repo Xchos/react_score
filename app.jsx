@@ -1,7 +1,7 @@
 var PLAYERS = [
-  {id: 1, name: "Lukáš Zelenka", score: 30},
-  {id: 2, name: "Jan Novák", score: 35},
-  {id: 3, name: "Jana Nováková", score: 32},
+  {id: 1, name: "Lukáš Zelenka"},
+  {id: 2, name: "Jan Novák"},
+  {id: 3, name: "Jana Nováková"},
 ];
 
 function Header(props) {
@@ -18,14 +18,17 @@ Header.propTypes = {
 
 
 var Counter = React.createClass({
-  propTypes: {
-    score: React.PropTypes.number.isRequired,  
+  propTypes: {},
+  getInitialState: function() {
+    return {
+      score: 0
+    }
   },
   render: function() {
     return (
       <div className="counter">
         <button className="counter-action decrement">-</button>
-        <div className="counter-score">{this.props.score}</div>
+        <div className="counter-score">{this.state.score}</div>
         <button className="counter-action increment">+</button>
       </div>
     );
@@ -38,14 +41,13 @@ function Player(props) {
   return (
     <div className="player">
       <div className="player-name">{props.name}</div>
-      <Counter score={props.score} />
+      <Counter />
     </div>
   );
 }
 
 Player.propTypes = {
   name: React.PropTypes.string.isRequired,
-  score: React.PropTypes.number.isRequired,  
 };
 
 function Application(props) {
@@ -54,7 +56,7 @@ function Application(props) {
       <Header title={props.title} />
       <div className="players"> 
         {props.players.map(function(player){
-          return <Player name={player.name} score={player.score} key={player.id} />;
+          return <Player name={player.name} key={player.id} />;
         })}
       </div>
     </div>
@@ -65,7 +67,6 @@ Application.propTypes = {
   title: React.PropTypes.string,
   players: React.PropTypes.arrayOf(React.PropTypes.shape({
     name: React.PropTypes.string.isRequired,
-    score: React.PropTypes.number.isRequired,
     id: React.PropTypes.number.isRequired    
   })).isRequired,
 };
